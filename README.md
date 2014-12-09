@@ -19,6 +19,6 @@ Installing and operating
     $ sudo chkconfig zookeeper on
 
 Default locations:
-libs, binaries and database: /opt/zookeeper
-logs: /var/log/zookeeper
-configs: /etc/zookeeper
+libs, binaries and database: /opt/zookeeper  
+logs: /var/log/zookeeper  
+configs: /etc/zookeeper  
