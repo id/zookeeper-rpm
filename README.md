@@ -4,7 +4,7 @@ A set of scripts to package zookeeper into an rpm
 
 Setup
 -----
-    $ yum groupinstall "Development Tools"
+    $ yum install rpmdevtools
 
 Building
 --------
