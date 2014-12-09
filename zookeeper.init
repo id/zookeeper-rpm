@@ -1,0 +1,75 @@
+#!/bin/bash
+#
+# ZooKeeper
+#
+# chkconfig: 2345 89 9
+# description: zookeeper
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+daemon_user=zookeeper
+daemon_home=$(getent passwd $daemon_user | cut -d: -f6)
+
+export ZOOCFGDIR=/etc/zookeeper
+
+prog="zookeeper"
+desc="ZooKeeper daemon"
+retval=0
+lockfile="/var/lock/subsys/$prog"
+
+
+start() {
+  echo -n $"Starting $desc: "
+  daemon --user ${daemon_user} ${daemon_home}/bin/zkServer.sh start
+  retval=$?
+  echo
+  [ $retval -eq 0 ] && touch $lockfile
+  return $retval
+}
+
+stop() {
+  echo -n $"Stopping $desc: "
+  daemon --user ${daemon_user} ${daemon_home}/bin/zkServer.sh stop
+  retval=$?
+  sleep 5
+  echo
+  [ $retval -eq 0 ] && rm -f $lockfile
+}
+
+restart() {
+  stop
+  start
+}
+
+checkstatus(){
+  ${daemon_home}/bin/zkServer.sh status
+  retval=$?
+}
+
+condrestart(){
+  [ -e $lockfile ] && restart || :
+}
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  status)
+    checkstatus
+    ;;
+  restart)
+    restart
+    ;;
+  condrestart)
+    condrestart
+    ;;
+  *)
+    echo $"Usage: $0 {start|stop|status|restart|condrestart}"
+    exit 1
+esac
+
+exit $retval
