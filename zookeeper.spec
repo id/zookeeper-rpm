@@ -8,7 +8,7 @@
 Summary: ZooKeeper is a centralized service for maintaining configuration information, naming, providing distributed synchronization, and providing group services.
 Name: zookeeper
 Version: %{version}
-Release: 1
+Release: %{build_number}
 License: Apache License, Version 2.0
 Group: Applications/Databases
 URL: http://zookeper.apache.org/
